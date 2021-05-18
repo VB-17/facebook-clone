@@ -1,7 +1,8 @@
 import { ChatAltIcon, ShareIcon, ThumbUpIcon } from "@heroicons/react/outline";
 import Image from "next/image";
+import Link from "next/link";
 
-function Post({ name, message, email, image, postImage, timestamp }) {
+function Post({ name, message, id, image, postImage, timestamp }) {
   return (
     <div className="flex flex-col">
       <div className="p-5 bg-white mt-5 rounded-t-2xl shadow-sm">
@@ -15,9 +16,13 @@ function Post({ name, message, email, image, postImage, timestamp }) {
           />
           <div>
             <p className="font-medium">{name}</p>
-            <p className="text-xs text-gray-400">
-              {new Date(timestamp?.toDate()).toLocaleString()}
-            </p>
+            {timestamp ? (
+              <p className="text-xs text-gray-400">
+                {new Date(timestamp?.toDate()).toLocaleString()}
+              </p>
+            ) : (
+              <p className="text-xs text-gray-400">Loading...</p>
+            )}
           </div>
         </div>
         <p className="mt-4">{message}</p>
@@ -35,7 +40,11 @@ function Post({ name, message, email, image, postImage, timestamp }) {
         </div>
         <div className="inputIcon rounded-none">
           <ChatAltIcon className="h-4" />
-          <p className="text-xs sm:text-base">Comment</p>
+          <p className="text-xs sm:text-base">
+            <Link href={`/posts/${id}/comments`}>
+              <a>Comment</a>
+            </Link>
+          </p>
         </div>
         <div className="inputIcon rounded-none">
           <ShareIcon className="h-4" />
